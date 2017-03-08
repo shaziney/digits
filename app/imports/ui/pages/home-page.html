@@ -1,6 +1,7 @@
 <template name="Home_Page">
   <div class="ui container">
 
+    {{#if Template.subscriptionsReady}}
     <table style="margin-top: 20px" class="ui celled table">
       <thead>
       <tr>
@@ -11,30 +12,22 @@
         <th>Email</th>
       </tr>
       </thead>
+
       <tbody>
+      {{#each contact in contactsList}}
       <tr>
-        <td>Shaziney</td>
-        <td>Natividad</td>
-        <td>2545 McCarthy Mall, Honolulu, HI</td>
-        <td>808-956-6824</td>
-        <td>shaziney@hawaii.edu</td>
+        <td>{{contact.first}}</td>
+        <td>{{contact.last}}</td>
+        <td>{{contact.address}}</td>
+        <td>{{contact.telephone}}</td>
+        <td>{{contact.email}}</td>
       </tr>
-      <tr>
-        <td>Shaziney</td>
-        <td>Natividad</td>
-        <td>P.O. Box 2128, Ewa Beach, HI</td>
-        <td>808-226-7328</td>
-        <td>shaziney@icloud.com</td>
-      </tr>
-      <tr>
-        <td>Shaziney</td>
-        <td>Natividad</td>
-        <td>91-1017 Kaiakua Street, Ewa Beach, HI</td>
-        <td>808-426-0705</td>
-        <td>shaziney@gmail.com</td>
-      </tr>
+      {{/each}}
       </tbody>
     </table>
+    {{else}}
+    {{> Loading}}
+    {{/if}}
 
   </div>
 </template>
