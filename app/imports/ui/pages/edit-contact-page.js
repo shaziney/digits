@@ -55,5 +55,31 @@ Template.Edit_Contact_Page.events({
       instance.messageFlags.set(displayErrorMessages, true);
     }
   },
+  'click .delete'(event, instance) {
+    event.preventDefault();
+    const first = event.target.First.value;
+    const last = event.target.Last.value;
+    const address = event.target.Address.value;
+    const telephone = event.target.Telephone.value;
+    const email = event.target.Email.value;
+
+    const deletedContact = { first, last, address, telephone, email };
+
+    instance.context.resetValidation();
+    // Invoke clean so that updatedContact reflects what will be inserted.
+    ContactsSchema.clean(deletedContact);
+    // Determine validity.
+    instance.context.validate(deletedContact);
+    if (instance.context.isValid()) {
+      Contacts.remove(FlowRouter.getParam('_id'), { $set: deletedContact });
+      instance.messageFlags.set(displayErrorMessages, false);
+      FlowRouter.go('Home_Page');
+    } else {
+      instance.messageFlags.set(displayErrorMessages, true);
+    }
 });
+
+
+
+
 
